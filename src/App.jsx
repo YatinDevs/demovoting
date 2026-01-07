@@ -13,11 +13,14 @@ import Candidate4Page from "./pages/Candidate4Page";
 import NotaPage from "./pages/NotaPage";
 import {
   ajikysane,
+  audiobeep,
+  audiolast,
   dipalikulkarni,
   kamalsign,
   shyambadode,
   supriyakhode,
 } from "./assets";
+// Your MPEG file
 
 // Language translations
 const translations = {
@@ -171,23 +174,18 @@ function App() {
   // Initialize audio on component mount
   useEffect(() => {
     // Initialize audio elements
-    beepAudioRef.current = new Audio();
-    successAudioRef.current = new Audio();
-    endAudioRef.current = new Audio();
-
-    // Set audio sources - using reliable online sounds
-    beepAudioRef.current.src =
-      "https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3";
-    successAudioRef.current.src =
-      "https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3";
-    endAudioRef.current.src =
-      "https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3";
+    beepAudioRef.current = new Audio(audiobeep);
+    successAudioRef.current = new Audio(audiobeep);
+    endAudioRef.current = new Audio(audiolast);
+    // Set audio properties
+    beepAudioRef.current.volume = 0.7;
+    successAudioRef.current.volume = 0.7;
+    endAudioRef.current.volume = 0.7;
 
     // Preload audio
     beepAudioRef.current.preload = "auto";
     successAudioRef.current.preload = "auto";
     endAudioRef.current.preload = "auto";
-
     // For browsers that require user interaction, we'll load audio on first interaction
     const handleFirstInteraction = () => {
       beepAudioRef.current.load();
@@ -297,16 +295,20 @@ function App() {
     return candidate.name;
   };
 
-  // Play beep sound with fallback
+  // Play beep sound from your MPEG file
   const playBeepSound = () => {
     if (beepAudioRef.current) {
-      beepAudioRef.current.currentTime = 0; // Reset to start
-      beepAudioRef.current.play().catch((e) => {
-        console.log("Beep audio failed, trying fallback:", e);
-        playGeneratedBeep();
-      });
+      try {
+        beepAudioRef.current.currentTime = 0; // Reset to start
+        beepAudioRef.current.play().catch((e) => {
+          console.log("Beep audio failed to play:", e);
+          // You can add a fallback here if needed
+        });
+      } catch (error) {
+        console.error("Error playing beep sound:", error);
+      }
     } else {
-      playGeneratedBeep();
+      console.warn("Beep audio ref is not initialized");
     }
   };
 
@@ -391,7 +393,9 @@ function App() {
   const handleLanguageChange = (e) => {
     setLanguage(e.target.value);
   };
-
+  const testBeepSound = () => {
+    playBeepSound();
+  };
   return (
     <Router>
       {/* Audio elements are now managed by refs, no need for separate audio tags */}

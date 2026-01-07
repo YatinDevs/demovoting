@@ -96,12 +96,12 @@ const Candidate1Page = ({
 
         {/* Navigation */}
         <div className="mt-6 flex justify-between items-center">
-          <button
+          {/* <button
             onClick={() => navigate("/")}
             className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg shadow transition-all"
           >
             ← Back to Home
-          </button>
+          </button> */}
 
           {/* <div className="text-center">
             {localVoteDone ? (
@@ -121,12 +121,12 @@ const Candidate1Page = ({
             )}
           </div> */}
 
-          <button
+          {/* <button
             onClick={() => navigate("/c2")}
             className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow transition-all"
           >
             Skip to Next →
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

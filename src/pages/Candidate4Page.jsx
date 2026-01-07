@@ -96,12 +96,12 @@ const Candidate4Page = ({
 
         {/* Navigation */}
         <div className="mt-6 flex justify-between items-center">
-          <button
+          {/* <button
             onClick={() => navigate("/c3")}
             className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg shadow transition-all"
           >
             ← Back to Candidate 3
-          </button>
+          </button> */}
 
           {/* <div className="text-center">
             {localVoteDone ? (
@@ -121,30 +121,15 @@ const Candidate4Page = ({
             )}
           </div> */}
 
-          <button
+          {/* <button
             onClick={() => navigate("/")}
             className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow transition-all"
           >
             Back to Home
-          </button>
+          </button> */}
         </div>
 
         {/* Progress Indicator */}
-        <div className="mt-4 bg-white/80 backdrop-blur-sm rounded-lg p-3 border">
-          <div className="flex justify-between text-sm mb-1">
-            <span>Voting Progress</span>
-            <span>4 of 5</span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2.5">
-            <div
-              className="bg-red-600 h-2.5 rounded-full transition-all duration-500"
-              style={{ width: "80%" }}
-            ></div>
-          </div>
-          <p className="text-xs text-gray-500 mt-1">
-            Next: NOTA (None of the Above)
-          </p>
-        </div>
       </div>
     </div>
   );
