@@ -35,7 +35,7 @@ const translations = {
     pollingDate: "Polling Date",
     pollingDateValue: "- Thursday, 2026-01-15 From 7 AM to 6 PM",
     division: "Division No.",
-    divisionValue: "- 25",
+    divisionValue: "- 30",
     tableHeaders: ["SrNo", "Candidate Name", "Photo", "Symbol", "Button"],
     pressButton: "Press Button",
     share: "Share",
@@ -81,7 +81,7 @@ const translations = {
     pollingDate: "मतदान तिथि",
     pollingDateValue: "- गुरुवार, 2026-01-15 सुबह ७ बजे से शाम ६ बजे तक",
     division: "प्रभाग क्र.",
-    divisionValue: "- २५",
+    divisionValue: "- ३०",
     tableHeaders: ["अ. क्र.", "उम्मीदवार का नाम", "छवि", "चिन्ह", "बटन"],
     pressButton: "बटन दबाएँ",
     share: "शेयर करें",
@@ -127,7 +127,7 @@ const translations = {
     pollingDateValue:
       "- गुरुवार, 2026-01-15 रोजी सकाळी ७ ते सायंकाळी ६ वाजेपर्यत",
     division: "प्रभाग क्र.",
-    divisionValue: "- २५",
+    divisionValue: "- ३०",
     tableHeaders: ["क्रमांक", "उमेदवाराचे नाव", "छायाचित्र", "चिन्ह", "बटण"],
     pressButton: "बटण दाबा",
     share: "शेअर करा",
@@ -170,27 +170,34 @@ function App() {
   const beepAudioRef = useRef(null);
   const successAudioRef = useRef(null);
   const endAudioRef = useRef(null);
+  const candidate4AudioRef = useRef(null); // New audio for candidate 4
 
   // Initialize audio on component mount
   useEffect(() => {
     // Initialize audio elements
     beepAudioRef.current = new Audio(audiobeep);
     successAudioRef.current = new Audio(audiobeep);
-    endAudioRef.current = new Audio(audiolast);
+    endAudioRef.current = new Audio(audiobeep);
+    candidate4AudioRef.current = new Audio(audiolast); // You can use audiolast for candidate 4
     // Set audio properties
     beepAudioRef.current.volume = 0.7;
     successAudioRef.current.volume = 0.7;
     endAudioRef.current.volume = 0.7;
+    candidate4AudioRef.current.volume = 0.7;
 
     // Preload audio
     beepAudioRef.current.preload = "auto";
     successAudioRef.current.preload = "auto";
     endAudioRef.current.preload = "auto";
+    candidate4AudioRef.current.preload = "auto";
+
     // For browsers that require user interaction, we'll load audio on first interaction
     const handleFirstInteraction = () => {
       beepAudioRef.current.load();
       successAudioRef.current.load();
       endAudioRef.current.load();
+      candidate4AudioRef.current.load();
+
       document.removeEventListener("click", handleFirstInteraction);
       document.removeEventListener("keydown", handleFirstInteraction);
       document.removeEventListener("touchstart", handleFirstInteraction);
@@ -294,7 +301,7 @@ function App() {
     if (language === "mr") return candidate.nameMarathi || candidate.name;
     return candidate.name;
   };
-
+  console.log("ss");
   // Play beep sound from your MPEG file
   const playBeepSound = () => {
     if (beepAudioRef.current) {
@@ -311,7 +318,24 @@ function App() {
       console.warn("Beep audio ref is not initialized");
     }
   };
-
+  // Play special sound for candidate 4
+  const playCandidate4Sound = () => {
+    if (candidate4AudioRef.current) {
+      try {
+        candidate4AudioRef.current.currentTime = 0;
+        candidate4AudioRef.current.play().catch((e) => {
+          console.log("Candidate 4 audio failed to play:", e);
+          // Fallback to regular beep
+          // playBeepSound();
+        });
+      } catch (error) {
+        console.error("Error playing candidate 4 sound:", error);
+        // playBeepSound();
+      }
+    } else {
+      // playBeepSound();
+    }
+  };
   // Play success sound
   const playSuccessSound = () => {
     if (successAudioRef.current) {
@@ -363,8 +387,16 @@ function App() {
   const handleVote = (candidate) => {
     if (votingCompleted) return;
 
-    // Play beep sound immediately when vote button is clicked
-    playBeepSound();
+    // Play appropriate sound based on candidate
+    console.log("Voting for candidate:", candidate.srNo); // Debug log
+
+    if (candidate.srNo === 4) {
+      console.log("Playing special audio for candidate 4");
+      playCandidate4Sound(); // Special sound for candidate 4
+    } else {
+      console.log("Playing regular beep for candidate", candidate.srNo);
+      playBeepSound(); // Regular beep for other candidates
+    }
 
     setIsProcessing(true);
 
@@ -497,6 +529,7 @@ function App() {
               isProcessing={isProcessing}
               candidate={candidates[3]}
               playBeepSound={playBeepSound} // Pass beep function to page
+              playCandidate4Sound={playCandidate4Sound} // Pass special sound
             />
           }
         />
@@ -519,6 +552,7 @@ function App() {
               playSuccessSound={playSuccessSound}
               playEndVotingSound={playEndVotingSound}
               playBeepSound={playBeepSound} // Pass beep function to page
+              playCandidate4Sound={playCandidate4Sound} // Pass special sound
             />
           }
         />

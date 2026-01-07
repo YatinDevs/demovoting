@@ -43,7 +43,7 @@ const Candidate1Page = ({
   return (
     <div className="min-h-screen">
       <Header
-        title={`${t.title} - Candidate 1`}
+        title={`${t.title}`}
         language={language}
         handleLanguageChange={handleLanguageChange}
         voteDigits={voteDigits}

@@ -16,34 +16,95 @@ const Candidate4Page = ({
   isProcessing,
   candidate,
   playBeepSound,
+  playCandidate4Sound,
 }) => {
   const navigate = useNavigate();
   const [localVoteDone, setLocalVoteDone] = useState(false);
   const voteDigits = votes.toString().padStart(8, "0").split("");
   const currentBgColor = candidate.bgColor;
-
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  console.log(candidate, playCandidate4Sound);
   const handleLocalVote = () => {
     if (votingCompleted || isProcessing) return;
 
     // Play beep sound immediately on button click
-    playBeepSound();
-
+    // Play special sound for candidate 4
+    if (playCandidate4Sound) {
+      playCandidate4Sound(); // Use the special audio for candidate 4
+    } else {
+      // Fallback to regular beep if special audio not available
+      playBeepSound();
+    }
+    console.log(candidate);
     // Call parent handle vote
     handleVote(candidate);
 
     // Mark local vote done
     setLocalVoteDone(true);
+    // Show popup message in current language
+    let message = "";
+    if (language === "en") {
+      message = `${t.voteRegistered} ${t.redirecting}`;
+    } else if (language === "hi") {
+      message = `${t.voteJamaHindi} ${t.redirectingHindi}`;
+    } else if (language === "mr") {
+      message = `${t.voteJamaMarathi} ${t.redirectingMarathi}`;
+    }
 
+    setPopupMessage(message);
+    setShowPopup(true);
     // Navigate to NOTA after delay
     setTimeout(() => {
+      setShowPopup(false);
+
       navigate("/");
-    }, 1000);
+    }, 2000);
   };
 
   return (
     <div className="min-h-screen">
+      {/* Popup Modal */}
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white rounded-xl p-8 max-w-md mx-4 shadow-2xl transform transition-all duration-300 scale-100">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg
+                  className="w-8 h-8 text-green-600"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-green-700 mb-3">
+                {language === "en" && "Vote Registered!"}
+                {language === "hi" && "आपला मत नोंदवले गेले आहे!"}
+                {language === "mr" && "आपला मत नोंदवले गेले आहे!"}
+              </h3>
+              {/* <p className="text-lg mb-4">{popupMessage}</p> */}
+              <div className="flex items-center justify-center space-x-2">
+                <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"></div>
+                <div
+                  className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"
+                  style={{ animationDelay: "0.2s" }}
+                ></div>
+                <div
+                  className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"
+                  style={{ animationDelay: "0.4s" }}
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <Header
-        title={`${t.title} - Candidate 4`}
+        title={`${t.title}`}
         language={language}
         handleLanguageChange={handleLanguageChange}
         voteDigits={voteDigits}
