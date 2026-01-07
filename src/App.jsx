@@ -11,6 +11,13 @@ import Candidate2Page from "./pages/Candidate2Page";
 import Candidate3Page from "./pages/Candidate3Page";
 import Candidate4Page from "./pages/Candidate4Page";
 import NotaPage from "./pages/NotaPage";
+import {
+  ajikysane,
+  dipalikulkarni,
+  kamalsign,
+  shyambadode,
+  supriyakhode,
+} from "./assets";
 
 // Language translations
 const translations = {
@@ -20,7 +27,7 @@ const translations = {
       "For demo voting press the blue button in front candidate name and symbol",
     votingMachine: "Municipal Corporation Dummy Voting Machine",
     candidateList:
-      "Candidate List: A - Badgujar Sudhakar Bhika, B - Matale Sadhana Pawan, C - Dhomse Bhagyshree Rakesh (BJP), D - Amrutkar Prakash Giridhar (BJP)",
+      "Candidate List: A - Adv.Shyam Dharmraj Badode, B - Khode Supriya Sunil, C - Kulkarni Deepali Sachin (BJP), D - Sane Ajinkya Vijay (BJP)",
     voteThem: "Vote them in by a huge margin by clicking the button!",
     pollingDate: "Polling Date",
     pollingDateValue: "- Thursday, 2026-01-15 From 7 AM to 6 PM",
@@ -65,7 +72,7 @@ const translations = {
       "डेमो मतदान के लिए उम्मीदवार के नाम और चिन्ह के सामने नीले बटन को दबाएं",
     votingMachine: "महानगर पालिका डमी वोटिंग मशीन",
     candidateList:
-      "उम्मीदवार सूची: अ - बडगुजर सुधाकर भिका, ब - मटाले साधना पवन, क - ढोमसे भाग्यश्री राकेश (भाजपा), ड - अमृतकर प्रकाश गिरीधर (भाजपा)",
+      "उम्मीदवार सूची: अ - अ‍ॅड.श्याम धर्मराज बडोदे, ब - खोडे सुप्रिया सुनील, क - कुलकर्णी दीपाली सचिन (भाजपा), ड - साने अजिंक्य विजय (भाजपा)",
     voteThem:
       "उनके नाम और चिन्ह के सामने बटन दबाकर उन्हें भारी मतों से जिताएं!",
     pollingDate: "मतदान तिथि",
@@ -110,7 +117,7 @@ const translations = {
       "डेमो मतदानासाठी उमेदवाराच्या नाव आणि चिन्हासमोरील निळ्या बटणावर क्लिक करा",
     votingMachine: "महानगर पालिका डमी मतदान मशीन",
     candidateList:
-      "उमेदवार यादी: अ - बडगुजर सुधाकर भिका, ब - मटाले साधना पवन, क - ढोमसे भाग्यश्री राकेश (भाजपा), ड - अमृतकर प्रकाश गिरीधर (भाजपा)",
+      "उमेदवार यादी: अ - अ‍ॅड.श्याम धर्मराज बडोदे, ब - खोडे सुप्रिया सुनील, क - कुलकर्णी दीपाली सचिन (भाजपा), ड - साने अजिंक्य विजय (भाजपा)",
     voteThem:
       "त्यांचे नाव आणि चिन्हासमोरील बटणावर क्लिक करून त्यांना प्रचंड मतांनी विजयी करा!",
     pollingDate: "मतदान दिनांक",
@@ -210,43 +217,41 @@ function App() {
     {
       id: 1,
       srNo: 1,
-      name: "बडगुजर सुधाकर भिका",
-      nameHindi: "बडगुजर सुधाकर भिका",
-      nameMarathi: "बडगुजर सुधाकर भिका",
-      nameEnglish: "Badgujar Sudhakar Bhika",
+      name: "अ‍ॅड.श्याम धर्मराज बडोदे",
+      nameHindi: "अ‍ॅड.श्याम धर्मराज बडोदे",
+      nameMarathi: "अ‍ॅड.श्याम धर्मराज बडोदे",
+      nameEnglish: "Adv.Shyam Dharmraj Badode",
       party: "Independent",
-      photo:
-        "https://firebasestorage.googleapis.com/v0/b/voter-admin-panel.firebasestorage.app/o/design6%2F1767546777182_0_0_Screenshot%202026-01-04%20at%2010.35.55%E2%80%AFPM.png?alt=media&token=96708b9e-a97d-4b9f-af89-2c74f6321fc3",
-      symbol:
-        "https://firebasestorage.googleapis.com/v0/b/voter-admin-panel.firebasestorage.app/o/design6%2F1767546920808_0_0_BJP.jpg?alt=media&token=1102a1b2-b9c-47dc-b453-7fc556040081",
-      symbolText: "BJP",
+      photo: shyambadode,
+      symbol: kamalsign,
+      symbolText: "Lotus",
       code: "अ",
       bgColor: "#ffffff",
     },
     {
       id: 2,
       srNo: 2,
-      name: "मटाले साधना पवन",
-      nameHindi: "मटाले साधना पवन",
-      nameMarathi: "मटाले साधना पवन",
-      nameEnglish: "Matale Sadhana Pawan",
+      name: "खोडे सुप्रिया सुनील",
+      nameHindi: "खोडे सुप्रिया सुनील",
+      nameMarathi: "खोडे सुप्रिया सुनील",
+      nameEnglish: "Khode Supriya Sunil",
       party: "Independent",
-      photo: "https://via.placeholder.com/80x80/3B82F6/FFFFFF?text=SP",
-      symbol: "https://via.placeholder.com/60x60/EF4444/FFFFFF?text=🌳",
-      symbolText: "Tree",
+      photo: supriyakhode,
+      symbol: kamalsign,
+      symbolText: "Lotus",
       code: "ब",
       bgColor: "#c777b0",
     },
     {
       id: 3,
       srNo: 3,
-      name: "ढोमसे भाग्यश्री राकेश",
-      nameHindi: "ढोमसे भाग्यश्री राकेश",
-      nameMarathi: "ढोमसे भाग्यश्री राकेश",
-      nameEnglish: "Dhomse Bhagyshree Rakesh",
+      name: "कुलकर्णी दीपाली सचिन",
+      nameHindi: "कुलकर्णी दीपाली सचिन",
+      nameMarathi: "कुलकर्णी दीपाली सचिन",
+      nameEnglish: "Kulkarni Deepali Sachin",
       party: "भाजपा पुरस्कृत",
-      photo: "https://via.placeholder.com/80x80/3B82F6/FFFFFF?text=DBR",
-      symbol: "https://via.placeholder.com/60x60/8B5CF6/FFFFFF?text=🌸",
+      photo: dipalikulkarni,
+      symbol: kamalsign,
       symbolText: "Lotus",
       code: "क",
       bgColor: "#f0e47f",
@@ -254,14 +259,14 @@ function App() {
     {
       id: 4,
       srNo: 4,
-      name: "अमृतकर प्रकाश गिरीधर",
-      nameHindi: "अमृतकर प्रकाश गिरीधर",
-      nameMarathi: "अमृतकर प्रकाश गिरीधर",
-      nameEnglish: "Amrutkar Prakash Giridhar",
+      name: "साने अजिंक्य विजय",
+      nameHindi: "साने अजिंक्य विजय",
+      nameMarathi: "साने अजिंक्य विजय",
+      nameEnglish: "Sane Ajinkya Vijay",
       party: "भाजपा पुरस्कृत",
-      photo: "https://via.placeholder.com/80x80/3B82F6/FFFFFF?text=APG",
-      symbol: "https://via.placeholder.com/60x60/8B5CF6/FFFFFF?text=🚗",
-      symbolText: "Car",
+      photo: ajikysane,
+      symbol: kamalsign,
+      symbolText: "Lotus",
       code: "ड",
       bgColor: "#7384d1",
     },
