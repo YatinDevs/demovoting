@@ -25,7 +25,7 @@ const VotingTable = ({
         srNo: i,
         candidate: rowCandidate,
         isCurrent: isCurrentRow,
-        bgColor: isCurrentRow ? candidate.bgColor : "#ffffff",
+        bgColor: candidate.bgColor,
         isNotaRow: i === 16 && !rowCandidate && !isNota,
       });
     }
