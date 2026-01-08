@@ -410,21 +410,20 @@ function App() {
   // Handle vote for candidate
   const handleVote = async (candidate) => {
     if (votingCompleted) return;
-
-    console.log("Voting for candidate:", candidate.srNo);
-
-    // Play appropriate sound
-    if (candidate.srNo === 4) {
-      console.log("Playing special audio for candidate 4");
-      playCandidate4Sound();
-    } else {
-      console.log("Playing regular beep for candidate", candidate.srNo);
-      playBeepSound();
-    }
-
-    setIsProcessing(true);
-
     try {
+      console.log("Voting for candidate:", candidate.srNo);
+
+      // Play appropriate sound
+      if (candidate.srNo === 4) {
+        console.log("Playing special audio for candidate 4");
+        playCandidate4Sound();
+      } else {
+        console.log("Playing regular beep for candidate", candidate.srNo);
+        playBeepSound();
+      }
+
+      setIsProcessing(true);
+
       // Call API to increment vote
       const apiSuccess = await incrementVoteOnAPI(
         candidate.id || candidate.srNo
@@ -439,8 +438,8 @@ function App() {
           setVotingCompleted(true);
           setTimeout(() => {
             playSuccessSound();
-            setTimeout(() => playEndVotingSound(), 1000);
-          }, 300);
+            setTimeout(() => playEndVotingSound(), 50);
+          }, 50);
         }
       } else {
         console.error("Failed to record vote on API");
@@ -448,9 +447,7 @@ function App() {
     } catch (error) {
       console.error("Error in vote handling:", error);
     } finally {
-      setTimeout(() => {
-        setIsProcessing(false);
-      }, 500);
+      setIsProcessing(false);
     }
   };
 

@@ -48,7 +48,35 @@ const Header = ({
             <button
               type="button"
               className="inline-flex items-center gap-2 text-sm md:text-base bg-[#0dcaf0] hover:bg-[#20bedd] rounded px-3 py-1 shadow hover:outline-1 outline outline-transparent hover:outline-sky-600"
-              onClick={() => setVotes((prev) => prev + 1)}
+              onClick={() => {
+                // Create the updated message with the voting options
+                const message = `नमस्कार 🙏 डेमो मतदान करण्यासाठी लिंक वर क्लिक करावे.
+
+👇👇👇👇👇👇
+
+https://prabhag30.demovoting.com
+
+अ. - अ‍ॅड.श्याम धर्मराज बडोदे
+
+ब. - खोडे सुप्रिया सुनील
+
+क. - कुलकर्णी दीपाली सचिन
+
+ड. - साने अजिंक्य विजय
+
+Plz व्हायरल!`;
+
+                // Create WhatsApp share URL with the message
+                const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+                  message
+                )}`;
+
+                // Open WhatsApp share window
+                window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
+                // Keep the original vote counting functionality
+                setVotes((prev) => prev + 1);
+              }}
             >
               {t.share}
               <svg
