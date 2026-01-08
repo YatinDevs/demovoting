@@ -9,7 +9,7 @@ import Candidate1Page from "./pages/Candidate1Page";
 import Candidate2Page from "./pages/Candidate2Page";
 import Candidate3Page from "./pages/Candidate3Page";
 import Candidate4Page from "./pages/Candidate4Page";
-import Candidates23Page from "./pages/Canditates23Page"; // Import the combined page
+import Candidates23Page from "./pages/Canditates23Page";
 import NotaPage from "./pages/NotaPage";
 import {
   ajikysane,
@@ -21,7 +21,12 @@ import {
   supriyakhode,
 } from "./assets";
 
-// Language translations (unchanged)
+// API endpoints
+const API_BASE_URL = "https://voteback.demovoting.com/api/v1";
+const INCREMENT_VOTE_URL = `${API_BASE_URL}/votes/increment`;
+const GET_VOTES_URL = `${API_BASE_URL}/votes`;
+
+// Language translations
 const translations = {
   en: {
     title: "Municipal Corporation Dummy Voting Machine",
@@ -154,16 +159,17 @@ const translations = {
     clickToVote: "मत देण्यासाठी उमेदवारासमोर 'बटण दाबा' वर क्लिक करा",
     finalStepDesc:
       "जर तुम्हाला कोणत्याही उमेदवाराला मत द्यायचे नसेल तर नोटा निवडण्यासाठी बटण दाबा",
-    completedMessage: "✅ तुमचे मत यशस्वीरित्या नोंदवले गेले आहे. धन्यवाद!",
+    completedMessage: "✅ तुमचे मत यशस्वीरित्या नोंदवले गेले आहे। धन्यवाद!",
   },
 };
 
 function App() {
-  const [votes, setVotes] = useState(2544);
+  const [votes, setVotes] = useState(0);
   const [votedCandidates, setVotedCandidates] = useState([]);
   const [votingCompleted, setVotingCompleted] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [language, setLanguage] = useState("mr");
+  const [isLoading, setIsLoading] = useState(true);
 
   // Audio refs
   const beepAudioRef = useRef(null);
@@ -171,8 +177,21 @@ function App() {
   const endAudioRef = useRef(null);
   const candidate4AudioRef = useRef(null);
 
-  // Initialize audio on component mount
+  // Fetch initial vote count on mount
   useEffect(() => {
+    fetchVotes();
+    initializeAudio();
+    loadVotedCandidatesFromStorage();
+  }, []);
+
+  // Save voted candidates to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("votedCandidates", JSON.stringify(votedCandidates));
+    localStorage.setItem("votingCompleted", JSON.stringify(votingCompleted));
+  }, [votedCandidates, votingCompleted]);
+
+  // Initialize audio
+  const initializeAudio = () => {
     beepAudioRef.current = new Audio(audiobeep);
     successAudioRef.current = new Audio(audiobeep);
     endAudioRef.current = new Audio(audiobeep);
@@ -187,28 +206,69 @@ function App() {
     successAudioRef.current.preload = "auto";
     endAudioRef.current.preload = "auto";
     candidate4AudioRef.current.preload = "auto";
+  };
 
-    const handleFirstInteraction = () => {
-      beepAudioRef.current.load();
-      successAudioRef.current.load();
-      endAudioRef.current.load();
-      candidate4AudioRef.current.load();
+  // Load voted candidates from localStorage
+  const loadVotedCandidatesFromStorage = () => {
+    const savedVotedCandidates = localStorage.getItem("votedCandidates");
+    const savedVotingCompleted = localStorage.getItem("votingCompleted");
 
-      document.removeEventListener("click", handleFirstInteraction);
-      document.removeEventListener("keydown", handleFirstInteraction);
-      document.removeEventListener("touchstart", handleFirstInteraction);
-    };
+    if (savedVotedCandidates) {
+      setVotedCandidates(JSON.parse(savedVotedCandidates));
+    }
 
-    document.addEventListener("click", handleFirstInteraction);
-    document.addEventListener("keydown", handleFirstInteraction);
-    document.addEventListener("touchstart", handleFirstInteraction);
+    if (savedVotingCompleted) {
+      setVotingCompleted(JSON.parse(savedVotingCompleted));
+    }
+  };
 
-    return () => {
-      document.removeEventListener("click", handleFirstInteraction);
-      document.removeEventListener("keydown", handleFirstInteraction);
-      document.removeEventListener("touchstart", handleFirstInteraction);
-    };
-  }, []);
+  // Fetch votes from API
+  const fetchVotes = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(GET_VOTES_URL);
+      if (response.ok) {
+        const data = await response.json();
+        // Assuming the API returns { total: number } or similar structure
+        const voteCount = data.total || data.count || data.votes || 0;
+        setVotes(voteCount);
+      }
+    } catch (error) {
+      console.error("Error fetching votes:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Increment vote on API
+  const incrementVoteOnAPI = async (candidateId) => {
+    try {
+      const response = await fetch(INCREMENT_VOTE_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          candidate_id: candidateId,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Vote incremented successfully:", data);
+        // Update local vote count after successful API call
+        setVotes((prev) => prev + 1);
+        return true;
+      } else {
+        console.error("Failed to increment vote");
+        return false;
+      }
+    } catch (error) {
+      console.error("Error incrementing vote:", error);
+      return false;
+    }
+  };
 
   // Current language translations
   const t = translations[language];
@@ -298,7 +358,7 @@ function App() {
     return candidate.name;
   };
 
-  // Play beep sound from your MPEG file
+  // Play beep sound
   const playBeepSound = () => {
     if (beepAudioRef.current) {
       try {
@@ -309,8 +369,6 @@ function App() {
       } catch (error) {
         console.error("Error playing beep sound:", error);
       }
-    } else {
-      console.warn("Beep audio ref is not initialized");
     }
   };
 
@@ -349,11 +407,12 @@ function App() {
   };
 
   // Handle vote for candidate
-  const handleVote = (candidate) => {
+  const handleVote = async (candidate) => {
     if (votingCompleted) return;
 
     console.log("Voting for candidate:", candidate.srNo);
 
+    // Play appropriate sound
     if (candidate.srNo === 4) {
       console.log("Playing special audio for candidate 4");
       playCandidate4Sound();
@@ -364,20 +423,34 @@ function App() {
 
     setIsProcessing(true);
 
-    setVotedCandidates((prev) => [...prev, candidate]);
-    setVotes((prev) => prev + 1);
+    try {
+      // Call API to increment vote
+      const apiSuccess = await incrementVoteOnAPI(
+        candidate.id || candidate.srNo
+      );
 
-    if (candidate.srNo === 16) {
-      setVotingCompleted(true);
+      if (apiSuccess) {
+        // Add to voted candidates
+        setVotedCandidates((prev) => [...prev, candidate]);
+
+        // If it's NOTA, mark voting as completed
+        if (candidate.srNo === 16) {
+          setVotingCompleted(true);
+          setTimeout(() => {
+            playSuccessSound();
+            setTimeout(() => playEndVotingSound(), 1000);
+          }, 300);
+        }
+      } else {
+        console.error("Failed to record vote on API");
+      }
+    } catch (error) {
+      console.error("Error in vote handling:", error);
+    } finally {
       setTimeout(() => {
-        playSuccessSound();
-        setTimeout(() => playEndVotingSound(), 1000);
-      }, 300);
+        setIsProcessing(false);
+      }, 500);
     }
-
-    setTimeout(() => {
-      setIsProcessing(false);
-    }, 500);
   };
 
   // Handle language change
@@ -387,6 +460,14 @@ function App() {
 
   const testBeepSound = () => {
     playBeepSound();
+  };
+
+  // Reset voting session
+  const resetVoting = () => {
+    setVotedCandidates([]);
+    setVotingCompleted(false);
+    localStorage.removeItem("votedCandidates");
+    localStorage.removeItem("votingCompleted");
   };
 
   return (
@@ -408,6 +489,8 @@ function App() {
               isProcessing={isProcessing}
               candidate={candidates[0]}
               playBeepSound={playBeepSound}
+              resetVoting={resetVoting}
+              isLoading={isLoading}
             />
           }
         />
@@ -428,11 +511,12 @@ function App() {
               isProcessing={isProcessing}
               candidate={candidates[0]}
               playBeepSound={playBeepSound}
+              resetVoting={resetVoting}
+              isLoading={isLoading}
             />
           }
         />
 
-        {/* Use the combined Candidates23Page for both c2 and c3 routes */}
         <Route
           path="/c2"
           element={
@@ -450,6 +534,8 @@ function App() {
               candidate2={candidates[1]}
               candidate3={candidates[2]}
               playBeepSound={playBeepSound}
+              resetVoting={resetVoting}
+              isLoading={isLoading}
             />
           }
         />
@@ -473,6 +559,8 @@ function App() {
               candidate={candidates[3]}
               playBeepSound={playBeepSound}
               playCandidate4Sound={playCandidate4Sound}
+              resetVoting={resetVoting}
+              isLoading={isLoading}
             />
           }
         />
@@ -496,6 +584,8 @@ function App() {
               playEndVotingSound={playEndVotingSound}
               playBeepSound={playBeepSound}
               playCandidate4Sound={playCandidate4Sound}
+              resetVoting={resetVoting}
+              isLoading={isLoading}
             />
           }
         />

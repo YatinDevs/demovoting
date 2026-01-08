@@ -13,12 +13,12 @@ const VotingTable = ({
   showOnlyOne = true,
   isNota = false,
 }) => {
-  // Create empty rows for positions 1-16
+  // Create empty rows for positions 1-11
   const generateRows = () => {
     const rows = [];
 
-    for (let i = 1; i <= 16; i++) {
-      const isCurrentRow = i === position || (isNota && i === 16);
+    for (let i = 1; i <= 11; i++) {
+      const isCurrentRow = i === position || (isNota && i === 11);
       const rowCandidate = isCurrentRow ? candidate : null;
 
       rows.push({
@@ -26,7 +26,7 @@ const VotingTable = ({
         candidate: rowCandidate,
         isCurrent: isCurrentRow,
         bgColor: candidate.bgColor,
-        isNotaRow: i === 16 && !rowCandidate && !isNota,
+        isNotaRow: i === 11 && !rowCandidate && !isNota,
       });
     }
 
