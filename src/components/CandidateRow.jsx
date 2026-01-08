@@ -81,7 +81,7 @@ const CandidateRow = ({
           {isCurrent && !votingCompleted ? (
             <button
               onClick={onVote}
-              className="text-xs md:text-sm tracking-tight rounded-full px-2 py-1 md:py-2 bg-[#003399] text-white shadow cursor-pointer hover:bg-blue-800 transition-colors animate-pulse"
+              className="text-xs md:text-sm tracking-tight rounded-full px-2 py-1 md:py-2 bg-[#003399] text-white shadow cursor-pointer hover:bg-blue-800"
               disabled={isProcessing}
             >
               {isProcessing ? t.processing : t.pressButton}

@@ -20,6 +20,7 @@ import {
   shyambadode,
   supriyakhode,
 } from "./assets";
+import Footer from "./pages/Footer";
 
 // API endpoints
 const API_BASE_URL = "https://voteback.demovoting.com/api/v1";
@@ -62,7 +63,7 @@ const translations = {
       "• Use the 'Reset & Vote Again' button to restart the voting process",
     footer: "Appdroid Tech Solutions 8788343984",
     testSound: "Test Sound 🔊",
-    processing: "Processing...",
+    processing: "Press Button",
     voteSummary: "Voting Summary",
     currentStatus: "Current Voting Status",
     nextToVote: "Next to vote:",
@@ -108,7 +109,7 @@ const translations = {
       "• मतदान प्रक्रिया को फिर से शुरू करने के लिए 'रीसेट करें और फिर से मतदान करें' बटन का उपयोग करें",
     footer: "Appdroid Tech Solutions 8788343984",
     testSound: "ध्वनि परीक्षण 🔊",
-    processing: "प्रसंस्करण...",
+    processing: "बटन दबाएँ",
     voteSummary: "मतदान सारांश",
     currentStatus: "वर्तमान मतदान स्थिति",
     nextToVote: "अगले मतदान के लिए:",
@@ -150,9 +151,9 @@ const translations = {
     instruction4: "• पूर्ण झाल्यावर, आपण पूर्ण होण्याचा आवाज ऐकू शकाल",
     instruction5:
       "• मतदान प्रक्रिया पुन्हा सुरू करण्यासाठी 'रीसेट करा आणि पुन्हा मतदान करा' बटण वापरा",
-    footer: "Appdroid Tech Solutions 8788343984",
+    footer: "RICH SYSTEM SOLUTIONS PVT LTD - 9595902006",
     testSound: "ध्वनी चाचणी 🔊",
-    processing: "प्रक्रिया करीत आहे...",
+    processing: "बटण दाबा",
     voteSummary: "मतदान सारांश",
     currentStatus: "वर्तमान मतदान स्थिती",
     nextToVote: "पुढील मतदानासाठी:",
@@ -592,6 +593,7 @@ function App() {
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      <Footer t={t} />
     </Router>
   );
 }

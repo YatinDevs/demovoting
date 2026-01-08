@@ -84,8 +84,8 @@ const Candidate4Page = ({
               </div>
               <h3 className="text-2xl font-bold text-green-700 mb-3">
                 {language === "en" && "Vote Registered!"}
-                {language === "hi" && "आपला मत नोंदवले गेले आहे!"}
-                {language === "mr" && "आपला मत नोंदवले गेले आहे!"}
+                {language === "hi" && "आपले मत नोंदवले गेले आहे!"}
+                {language === "mr" && "आपले मत नोंदवले गेले आहे!"}
               </h3>
               {/* <p className="text-lg mb-4">{popupMessage}</p> */}
               <div className="flex items-center justify-center space-x-2">
