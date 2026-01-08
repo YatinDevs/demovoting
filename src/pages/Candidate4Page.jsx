@@ -59,7 +59,7 @@ const Candidate4Page = ({
       setShowPopup(false);
 
       navigate("/");
-    }, 2000);
+    }, 4000);
   };
 
   return (

@@ -34,7 +34,7 @@ const CandidateRow = ({
           {candidate && candidate.photo ? (
             <img
               alt={getCandidateName(candidate)}
-              className="h-8 w-8 md:h-10 md:w-10 object-cover rounded-full border"
+              className="h-16 w-12 md:h-10 md:w-10 object-contain rounded-full border"
               src={candidate.photo}
               style={{
                 opacity: 1,

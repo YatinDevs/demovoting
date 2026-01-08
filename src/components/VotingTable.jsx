@@ -41,6 +41,7 @@ const VotingTable = ({
       style={{ backgroundColor: currentBgColor }}
     >
       <div className="overflow-x-auto rounded-xl">
+        <h3 className="text-center font-extrabold">गट : {candidate.code}</h3>
         <table className="w-full text-xs md:text-sm">
           <thead
             className="font-semibold sticky top-0 z-10"

@@ -1,38 +1,49 @@
 import React from "react";
-import CandidateRow from "../pages/CandidateRow";
+import CandidateRow from "./CandidateRow";
 
-const VotingTable = ({
-  candidates,
-  notaCandidate,
-  currentCandidateIndex,
+const VotingTable4Rows = ({
+  candidate,
   votingCompleted,
   isProcessing,
   handleVote,
   t,
   getCandidateName,
   currentBgColor,
+  position = 1,
+  showOnlyOne = true,
+  isNota = false,
 }) => {
-  // Create table rows (4 candidates + NOTA)
-  const tableRows = [
-    ...candidates.map((candidate, index) => ({
-      ...candidate,
-      isCurrent: index === currentCandidateIndex,
-    })),
-    {
-      ...notaCandidate,
-      isCurrent: currentCandidateIndex === candidates.length,
-    },
-  ];
+  // Create empty rows for positions 1-5
+  const generateRows = () => {
+    const rows = [];
+
+    for (let i = 1; i <= 5; i++) {
+      const isCurrentRow = i === position || (isNota && i === 5);
+      const rowCandidate = isCurrentRow ? candidate : null;
+
+      rows.push({
+        srNo: i,
+        candidate: rowCandidate,
+        isCurrent: isCurrentRow,
+        bgColor: isCurrentRow ? candidate.bgColor : "#ffffff",
+        isNotaRow: i === 5 && !rowCandidate && !isNota,
+      });
+    }
+
+    return rows;
+  };
+
+  const tableRows = generateRows();
 
   return (
     <div
-      className="mt-6 rounded-2xl border-2 border-[#cccccc] px-3 py-8 md:px-4 md:py-8 relative panel-slide-left shadow-lg"
+      className="mt-6 rounded-2xl border-2 border-[#cccccc] px-3 py-8 md:px-4 md:py-8 relative panel-slide-left shadow-lg transition-all duration-500"
       style={{ backgroundColor: currentBgColor }}
     >
       <div className="overflow-x-auto rounded-xl">
         <table className="w-full text-xs md:text-sm">
           <thead
-            className="font-semibold sticky top-0 z-10"
+            className="font-semibold sticky top-0 z-4"
             style={{ backgroundColor: currentBgColor }}
           >
             <tr>
@@ -60,20 +71,35 @@ const VotingTable = ({
             {tableRows.map((row) => (
               <CandidateRow
                 key={row.srNo}
-                candidate={row}
+                candidate={row.candidate}
                 t={t}
                 isCurrent={row.isCurrent}
                 votingCompleted={votingCompleted}
                 isProcessing={isProcessing}
                 onVote={handleVote}
                 getCandidateName={getCandidateName}
+                bgColor={row.bgColor}
+                srNo={row.srNo}
+                isNotaRow={row.isNotaRow}
               />
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Current Candidate Indicator */}
+      {showOnlyOne && (
+        <div className="mt-4 text-center">
+          <div className="inline-flex items-center gap-2 bg-black/4 px-4 py-2 rounded-full">
+            <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+            <span className="text-sm font-semibold">
+              Candidate {position}: {getCandidateName(candidate)}
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default VotingTable;
+export default VotingTable4Rows;

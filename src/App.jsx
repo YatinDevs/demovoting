@@ -5,11 +5,11 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import HomePage from "./pages/Homepage";
 import Candidate1Page from "./pages/Candidate1Page";
 import Candidate2Page from "./pages/Candidate2Page";
 import Candidate3Page from "./pages/Candidate3Page";
 import Candidate4Page from "./pages/Candidate4Page";
+import Candidates23Page from "./pages/Canditates23Page"; // Import the combined page
 import NotaPage from "./pages/NotaPage";
 import {
   ajikysane,
@@ -20,9 +20,8 @@ import {
   shyambadode,
   supriyakhode,
 } from "./assets";
-// Your MPEG file
 
-// Language translations
+// Language translations (unchanged)
 const translations = {
   en: {
     title: "Municipal Corporation Dummy Voting Machine",
@@ -30,10 +29,10 @@ const translations = {
       "For demo voting press the blue button in front candidate name and symbol",
     votingMachine: "Municipal Corporation Dummy Voting Machine",
     candidateList:
-      "Candidate List: A - Adv.Shyam Dharmraj Badode, B - Khode Supriya Sunil, C - Kulkarni Deepali Sachin (BJP), D - Sane Ajinkya Vijay (BJP)",
+      "A - Adv.Shyam Dharmraj Badode, B - Khode Supriya Sunil, C - Kulkarni Deepali Sachin (BJP), D - Sane Ajinkya Vijay (BJP)",
     voteThem: "Vote them in by a huge margin by clicking the button!",
     pollingDate: "Polling Date",
-    pollingDateValue: "- Thursday, 2026-01-15 From 7 AM to 6 PM",
+    pollingDateValue: "- Thursday, 2026-01-15 From 7:30 AM to 5:30 PM",
     division: "Division No.",
     divisionValue: "- 30",
     tableHeaders: ["SrNo", "Candidate Name", "Photo", "Symbol", "Button"],
@@ -75,11 +74,11 @@ const translations = {
       "डेमो मतदान के लिए उम्मीदवार के नाम और चिन्ह के सामने नीले बटन को दबाएं",
     votingMachine: "महानगर पालिका डमी वोटिंग मशीन",
     candidateList:
-      "उम्मीदवार सूची: अ - अ‍ॅड.श्याम धर्मराज बडोदे, ब - खोडे सुप्रिया सुनील, क - कुलकर्णी दीपाली सचिन (भाजपा), ड - साने अजिंक्य विजय (भाजपा)",
+      "अ - अ‍ॅड.श्याम धर्मराज बडोदे, ब - खोडे सुप्रिया सुनील, क - कुलकर्णी दीपाली सचिन (भाजपा), ड - साने अजिंक्य विजय (भाजपा)",
     voteThem:
       "उनके नाम और चिन्ह के सामने बटन दबाकर उन्हें भारी मतों से जिताएं!",
     pollingDate: "मतदान तिथि",
-    pollingDateValue: "- गुरुवार, 2026-01-15 सुबह ७ बजे से शाम ६ बजे तक",
+    pollingDateValue: "- गुरुवार, 2026-01-15 सुबह ७:३० बजे से शाम ५:३० बजे तक",
     division: "प्रभाग क्र.",
     divisionValue: "- ३०",
     tableHeaders: ["अ. क्र.", "उम्मीदवार का नाम", "छवि", "चिन्ह", "बटन"],
@@ -120,12 +119,12 @@ const translations = {
       "डेमो मतदानासाठी उमेदवाराच्या नाव आणि चिन्हासमोरील निळ्या बटणावर क्लिक करा",
     votingMachine: "महानगर पालिका डमी मतदान मशीन",
     candidateList:
-      "उमेदवार यादी: अ - अ‍ॅड.श्याम धर्मराज बडोदे, ब - खोडे सुप्रिया सुनील, क - कुलकर्णी दीपाली सचिन (भाजपा), ड - साने अजिंक्य विजय (भाजपा)",
+      "अ - अ‍ॅड.श्याम धर्मराज बडोदे, ब - खोडे सुप्रिया सुनील, क - कुलकर्णी दीपाली सचिन (भाजपा), ड - साने अजिंक्य विजय (भाजपा)",
     voteThem:
       "त्यांचे नाव आणि चिन्हासमोरील बटणावर क्लिक करून त्यांना प्रचंड मतांनी विजयी करा!",
     pollingDate: "मतदान दिनांक",
     pollingDateValue:
-      "- गुरुवार, 2026-01-15 रोजी सकाळी ७ ते सायंकाळी ६ वाजेपर्यत",
+      "- गुरुवार, 2026-01-15 रोजी सकाळी ७:३० ते सायंकाळी ५:३० वाजेपर्यत",
     division: "प्रभाग क्र.",
     divisionValue: "- ३०",
     tableHeaders: ["क्रमांक", "उमेदवाराचे नाव", "छायाचित्र", "चिन्ह", "बटण"],
@@ -170,28 +169,25 @@ function App() {
   const beepAudioRef = useRef(null);
   const successAudioRef = useRef(null);
   const endAudioRef = useRef(null);
-  const candidate4AudioRef = useRef(null); // New audio for candidate 4
+  const candidate4AudioRef = useRef(null);
 
   // Initialize audio on component mount
   useEffect(() => {
-    // Initialize audio elements
     beepAudioRef.current = new Audio(audiobeep);
     successAudioRef.current = new Audio(audiobeep);
     endAudioRef.current = new Audio(audiobeep);
-    candidate4AudioRef.current = new Audio(audiolast); // You can use audiolast for candidate 4
-    // Set audio properties
+    candidate4AudioRef.current = new Audio(audiolast);
+
     beepAudioRef.current.volume = 0.7;
     successAudioRef.current.volume = 0.7;
     endAudioRef.current.volume = 0.7;
     candidate4AudioRef.current.volume = 0.7;
 
-    // Preload audio
     beepAudioRef.current.preload = "auto";
     successAudioRef.current.preload = "auto";
     endAudioRef.current.preload = "auto";
     candidate4AudioRef.current.preload = "auto";
 
-    // For browsers that require user interaction, we'll load audio on first interaction
     const handleFirstInteraction = () => {
       beepAudioRef.current.load();
       successAudioRef.current.load();
@@ -301,15 +297,14 @@ function App() {
     if (language === "mr") return candidate.nameMarathi || candidate.name;
     return candidate.name;
   };
-  console.log("ss");
+
   // Play beep sound from your MPEG file
   const playBeepSound = () => {
     if (beepAudioRef.current) {
       try {
-        beepAudioRef.current.currentTime = 0; // Reset to start
+        beepAudioRef.current.currentTime = 0;
         beepAudioRef.current.play().catch((e) => {
           console.log("Beep audio failed to play:", e);
-          // You can add a fallback here if needed
         });
       } catch (error) {
         console.error("Error playing beep sound:", error);
@@ -318,6 +313,7 @@ function App() {
       console.warn("Beep audio ref is not initialized");
     }
   };
+
   // Play special sound for candidate 4
   const playCandidate4Sound = () => {
     if (candidate4AudioRef.current) {
@@ -325,17 +321,13 @@ function App() {
         candidate4AudioRef.current.currentTime = 0;
         candidate4AudioRef.current.play().catch((e) => {
           console.log("Candidate 4 audio failed to play:", e);
-          // Fallback to regular beep
-          // playBeepSound();
         });
       } catch (error) {
         console.error("Error playing candidate 4 sound:", error);
-        // playBeepSound();
       }
-    } else {
-      // playBeepSound();
     }
   };
+
   // Play success sound
   const playSuccessSound = () => {
     if (successAudioRef.current) {
@@ -356,60 +348,27 @@ function App() {
     }
   };
 
-  // Generate beep using Web Audio API (fallback)
-  const playGeneratedBeep = () => {
-    try {
-      const audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      oscillator.frequency.value = 800; // Frequency in Hz
-      oscillator.type = "sine"; // Type of wave
-
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.01,
-        audioContext.currentTime + 0.1
-      );
-
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.1);
-    } catch (error) {
-      console.error("Web Audio API not supported:", error);
-    }
-  };
-
-  // Handle vote for candidate - UPDATED TO PLAY BEEP
+  // Handle vote for candidate
   const handleVote = (candidate) => {
     if (votingCompleted) return;
 
-    // Play appropriate sound based on candidate
-    console.log("Voting for candidate:", candidate.srNo); // Debug log
+    console.log("Voting for candidate:", candidate.srNo);
 
     if (candidate.srNo === 4) {
       console.log("Playing special audio for candidate 4");
-      playCandidate4Sound(); // Special sound for candidate 4
+      playCandidate4Sound();
     } else {
       console.log("Playing regular beep for candidate", candidate.srNo);
-      playBeepSound(); // Regular beep for other candidates
+      playBeepSound();
     }
 
     setIsProcessing(true);
 
-    // Add to voted candidates
     setVotedCandidates((prev) => [...prev, candidate]);
-
-    // Increment votes counter
     setVotes((prev) => prev + 1);
 
-    // If it's NOTA, mark voting as completed
     if (candidate.srNo === 16) {
       setVotingCompleted(true);
-      // Play success sounds for NOTA
       setTimeout(() => {
         playSuccessSound();
         setTimeout(() => playEndVotingSound(), 1000);
@@ -425,13 +384,13 @@ function App() {
   const handleLanguageChange = (e) => {
     setLanguage(e.target.value);
   };
+
   const testBeepSound = () => {
     playBeepSound();
   };
+
   return (
     <Router>
-      {/* Audio elements are now managed by refs, no need for separate audio tags */}
-
       <Routes>
         <Route
           path="/"
@@ -448,7 +407,7 @@ function App() {
               votingCompleted={votingCompleted}
               isProcessing={isProcessing}
               candidate={candidates[0]}
-              playBeepSound={playBeepSound} // Pass beep function to page
+              playBeepSound={playBeepSound}
             />
           }
         />
@@ -468,15 +427,16 @@ function App() {
               votingCompleted={votingCompleted}
               isProcessing={isProcessing}
               candidate={candidates[0]}
-              playBeepSound={playBeepSound} // Pass beep function to page
+              playBeepSound={playBeepSound}
             />
           }
         />
 
+        {/* Use the combined Candidates23Page for both c2 and c3 routes */}
         <Route
           path="/c2"
           element={
-            <Candidate2Page
+            <Candidates23Page
               votes={votes}
               setVotes={setVotes}
               language={language}
@@ -487,31 +447,14 @@ function App() {
               handleVote={handleVote}
               votingCompleted={votingCompleted}
               isProcessing={isProcessing}
-              candidate={candidates[1]}
-              playBeepSound={playBeepSound} // Pass beep function to page
+              candidate2={candidates[1]}
+              candidate3={candidates[2]}
+              playBeepSound={playBeepSound}
             />
           }
         />
 
-        <Route
-          path="/c3"
-          element={
-            <Candidate3Page
-              votes={votes}
-              setVotes={setVotes}
-              language={language}
-              handleLanguageChange={handleLanguageChange}
-              testBeepSound={playBeepSound}
-              t={t}
-              getCandidateName={getCandidateName}
-              handleVote={handleVote}
-              votingCompleted={votingCompleted}
-              isProcessing={isProcessing}
-              candidate={candidates[2]}
-              playBeepSound={playBeepSound} // Pass beep function to page
-            />
-          }
-        />
+        <Route path="/c3" element={<Navigate to="/c2" />} />
 
         <Route
           path="/c4"
@@ -528,8 +471,8 @@ function App() {
               votingCompleted={votingCompleted}
               isProcessing={isProcessing}
               candidate={candidates[3]}
-              playBeepSound={playBeepSound} // Pass beep function to page
-              playCandidate4Sound={playCandidate4Sound} // Pass special sound
+              playBeepSound={playBeepSound}
+              playCandidate4Sound={playCandidate4Sound}
             />
           }
         />
@@ -551,8 +494,8 @@ function App() {
               notaCandidate={notaCandidate}
               playSuccessSound={playSuccessSound}
               playEndVotingSound={playEndVotingSound}
-              playBeepSound={playBeepSound} // Pass beep function to page
-              playCandidate4Sound={playCandidate4Sound} // Pass special sound
+              playBeepSound={playBeepSound}
+              playCandidate4Sound={playCandidate4Sound}
             />
           }
         />
