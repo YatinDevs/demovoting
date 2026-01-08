@@ -62,8 +62,6 @@ const Candidates23Page = ({
       }, 1000);
     }
   };
-
-  // Get Thai table headers based on language
   const getThaiTableHeaders = () => {
     if (language === "en") {
       return ["SrNo", "Candidate Name", "Photo", "Symbol", "Button"];
@@ -74,6 +72,18 @@ const Candidates23Page = ({
     }
     return ["SrNo", "Candidate Name", "Photo", "Symbol", "Button"];
   };
+
+  // Get Thai table headers based on language
+  //   const getThaiTableHeaders = () => {
+  //     if (language === "en") {
+  //       return ["SrNo", "Candidate Name", "Photo", "Symbol", "Button"];
+  //     } else if (language === "hi") {
+  //       return ["अ. क्र.", "उम्मीदवार का नाम", "छवि", "चिन्ह", "बटन"];
+  //     } else if (language === "mr") {
+  //       return ["क्रमांक", "उमेदवाराचे नाव", "छायाचित्र", "चिन्ह", "बटण"];
+  //     }
+  //     return ["SrNo", "Candidate Name", "Photo", "Symbol", "Button"];
+  //   };
 
   const thaiHeaders = getThaiTableHeaders();
 
@@ -93,11 +103,11 @@ const Candidates23Page = ({
 
       <hr className="border-t max-w-xl mx-auto border-neutral-400 my-4" />
 
-      <div className="max-w-2xl mx-auto px-3 md:px-8 relative">
+      <div className="max-w-2xl mx-auto  relative">
         {/* Combined Table Container */}
         <div>
           {/* Candidate 2 Section */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl px-4 ">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl ">
             {/* Candidate 2 Voting Table */}
             <VotingTable4Rows
               language={language}
@@ -114,7 +124,7 @@ const Candidates23Page = ({
           </div>
 
           {/* Candidate 3 Section */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl px-4 ">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl  ">
             {/* Candidate 3 Voting Table */}
             <VotingTable4Rows
               language={language}

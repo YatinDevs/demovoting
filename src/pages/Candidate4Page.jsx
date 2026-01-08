@@ -117,7 +117,7 @@ const Candidate4Page = ({
 
       <hr className="border-t max-w-xl mx-auto border-neutral-400 my-4" />
 
-      <div className="max-w-2xl mx-auto px-3 md:px-8 relative">
+      <div className="max-w-2xl mx-auto  relative">
         {/* Current Status */}
         {/* <div className="mt-4 bg-white/80 backdrop-blur-sm rounded-xl p-4 border-2 border-red-400 shadow-lg">
           <h3 className="font-bold text-red-800 mb-2 flex items-center gap-2 text-lg">

@@ -37,7 +37,7 @@ const VotingTable = ({
 
   return (
     <div
-      className="mt-6 rounded-2xl border-2 border-[#cccccc] px-3 py-8 md:px-4 md:py-8 relative panel-slide-left shadow-lg transition-all duration-500"
+      className="mt-6 border-2 border-[#cccccc]  py-2 md:px-4 md:py-2 relative panel-slide-left shadow-lg transition-all duration-500"
       style={{ backgroundColor: currentBgColor }}
     >
       <div className="overflow-x-auto rounded-xl">
@@ -89,7 +89,7 @@ const VotingTable = ({
       </div>
 
       {/* Current Candidate Indicator */}
-      {showOnlyOne && (
+      {/* {showOnlyOne && (
         <div className="mt-4 text-center">
           <div className="inline-flex items-center gap-2 bg-black/10 px-4 py-2 rounded-full">
             <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
@@ -98,7 +98,7 @@ const VotingTable = ({
             </span>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
