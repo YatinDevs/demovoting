@@ -51,7 +51,7 @@ const VotingTable = ({
               {t.tableHeaders.map((header, index) => (
                 <th
                   key={index}
-                  className={`px-2 py-3 md:px-3 md:py-4 border-b-2 border-gray-300 ${
+                  className={`px-2 py-3 md:px-3 md:py-4  border-gray-300 ${
                     index === 0
                       ? "w-[50px] md:w-[60px] text-left"
                       : index === 2

@@ -241,7 +241,7 @@ function App() {
       symbol: kamalsign,
       symbolText: "Lotus",
       code: "ब",
-      bgColor: "#c777b0",
+      bgColor: "#FFC0CB",
     },
     {
       id: 3,
@@ -255,7 +255,7 @@ function App() {
       symbol: kamalsign,
       symbolText: "Lotus",
       code: "क",
-      bgColor: "#f0e47f",
+      bgColor: "#FFFF8A",
     },
     {
       id: 4,
@@ -269,7 +269,7 @@ function App() {
       symbol: kamalsign,
       symbolText: "Lotus",
       code: "ड",
-      bgColor: "#7384d1",
+      bgColor: "#DBF3F4",
     },
   ];
 

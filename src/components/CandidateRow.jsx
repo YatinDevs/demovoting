@@ -14,7 +14,7 @@ const CandidateRow = ({
 }) => {
   return (
     <tr
-      className="border-t transition-colors duration-300"
+      className="border transition-colors duration-300"
       style={{ backgroundColor: bgColor }}
     >
       <td className="px-1 py-4 md:px-2 md:py-2 text-center font-semibold">

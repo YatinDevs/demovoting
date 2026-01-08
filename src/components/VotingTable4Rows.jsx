@@ -2,6 +2,7 @@ import React from "react";
 import CandidateRow from "./CandidateRow";
 
 const VotingTable4Rows = ({
+  language,
   candidate,
   votingCompleted,
   isProcessing,
@@ -37,10 +38,20 @@ const VotingTable4Rows = ({
 
   return (
     <div
-      className="mt-6 rounded-2xl border-2 border-[#cccccc] px-3 py-8 md:px-4 md:py-8 relative panel-slide-left shadow-lg transition-all duration-500"
+      className=" rounded-2xl border-2 border-[#cccccc] px-3 py-8 md:px-4 md:py-8 relative panel-slide-left shadow-lg transition-all duration-500"
       style={{ backgroundColor: currentBgColor }}
     >
       <div className="overflow-x-auto rounded-xl">
+        <div className="mb-6 text-center">
+          <p className="text-black-700">
+            <strong>
+              {language === "en" && "gat:"}
+              {language === "hi" && "गट:"}
+              {language === "mr" && "गट:"}
+            </strong>{" "}
+            {candidate.code}
+          </p>
+        </div>
         <table className="w-full text-xs md:text-sm">
           <thead
             className="font-semibold sticky top-0 z-4"

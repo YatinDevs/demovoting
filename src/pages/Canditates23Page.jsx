@@ -97,21 +97,10 @@ const Candidates23Page = ({
         {/* Combined Table Container */}
         <div>
           {/* Candidate 2 Section */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 ">
-            {/* Candidate 2 Header */}
-            <div className="mb-6">
-              <p className="text-purple-700">
-                <strong>
-                  {language === "en" && "Gat:"}
-                  {language === "hi" && "गट:"}
-                  {language === "mr" && "गट:"}
-                </strong>{" "}
-                {candidate2.code}
-              </p>
-            </div>
-
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl px-4 ">
             {/* Candidate 2 Voting Table */}
             <VotingTable4Rows
+              language={language}
               candidate={candidate2}
               votingCompleted={votingCompleted}
               isProcessing={isProcessing}
@@ -125,21 +114,10 @@ const Candidates23Page = ({
           </div>
 
           {/* Candidate 3 Section */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 ">
-            {/* Candidate 3 Header */}
-            <div className="mb-6">
-              <p className="text-yellow-700">
-                <strong>
-                  {language === "en" && "gat:"}
-                  {language === "hi" && "गट:"}
-                  {language === "mr" && "गट:"}
-                </strong>{" "}
-                {candidate3.code}
-              </p>
-            </div>
-
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl px-4 ">
             {/* Candidate 3 Voting Table */}
             <VotingTable4Rows
+              language={language}
               candidate={candidate3}
               votingCompleted={votingCompleted}
               isProcessing={isProcessing}
